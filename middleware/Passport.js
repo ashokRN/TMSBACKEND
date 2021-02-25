@@ -4,11 +4,13 @@ const User = require('../models').User;
 const CONFIG = require('../config/config');
 const {to} = require('../utils/Util');
 
+const {JWT_ENCRYPTION} = CONFIG;
+
 
 module.exports = function(passport){
     var opts = {};
     opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-    opts.secretOrKey = CONFIG.jwt_encryption;
+    opts.secretOrKey = JWT_ENCRYPTION;
 
     passport.use(new JwtStrategy(opts, async function(jwt_payload, done){
         let err, user;
