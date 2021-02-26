@@ -29,7 +29,7 @@ const UserSchema = new mongoose.Schema({
   projects: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "",
+      ref: "Project",
     },
   ],
   Grops: [
