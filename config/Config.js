@@ -12,4 +12,6 @@ CONFIG.JWT_ENCRYPTION = process.env.JWT_ENCRYPTION || "jwt_please_change";
 
 CONFIG.JWT_EXPIRATION = process.env.JWT_EXPIRATION || "10000";
 
+CONFIG.TASK_STATUS = ['NOT ASSIGN', 'PENDING', 'COMPLETED', 'IN PROGRESS']
+
 module.exports = CONFIG;
