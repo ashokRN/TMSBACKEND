@@ -24,3 +24,17 @@ exports.create = async (req, res) => {
     return ReS(res, {message:'Department created!', Department:create}, OK)
 
 }
+
+exports.getAll = async (req, res) => {
+    let user = req.user;
+
+    let err, exisitingDepartments;
+
+    [err, exisitingDepartments] = await to(Department.find({}));
+
+    if(err) { return ReE(res, err, INTERNAL_SERVER_ERROR) }
+
+    if(exisitingDepartments?.length === 0) { return ReE(res, {message:'Doesn\'t Have any Departments'}, BAD_REQUEST) }
+
+    return ReS(res, {message:'Department found!', Department: exisitingDepartments}, OK);
+}

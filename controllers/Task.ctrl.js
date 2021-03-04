@@ -12,7 +12,7 @@ exports.create = async (req, res) => {
 
     if (invalidFields.length !== 0) { return ReE( res, { message: `Ennter ${invalidFields}` }, BAD_REQUEST );}
 
-    [err, exisitingTask] = await to(Tool.findOne({name: ReQ.name,module:ReQ.module,Project: ReQ.project }));
+    [err, exisitingTask] = await to(Task.findOne({name: ReQ.name,module:ReQ.module,Project: ReQ.project }));
 
     if(err){ return ReE(res, err, INTERNAL_SERVER_ERROR) }
 
@@ -32,4 +32,6 @@ exports.create = async (req, res) => {
     if(!create){ return ReE(res, {message:'Task doesn\'t create, Try again!'}, BAD_REQUEST) }
 
     return ReS(res, {message:'Task created!', Task:create}, OK)
+
+
 };

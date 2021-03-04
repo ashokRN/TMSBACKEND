@@ -6,7 +6,10 @@ const ModuleSchema = new mongoose.Schema({
         type:String,
         required: true
     },
-    
+    department:{
+        type:Ids,
+        ref:'Department'
+    }
 });
 
 module.exports = new mongoose.model('Module', ModuleSchema);

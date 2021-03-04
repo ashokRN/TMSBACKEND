@@ -15,7 +15,7 @@ exports.create = async (req, res) => {
 
     if(exisitingModule){ return ReE(res, {message:'Module is already here !'}, BAD_REQUEST) }
 
-    [err, create] = await to(Module({ name: ReQ.name }).save());
+    [err, create] = await to(Module({ name: ReQ.name, department:ReQ.department }).save());
 
     if(err){ return ReE(res, err, INTERNAL_SERVER_ERROR) }
 
@@ -24,3 +24,4 @@ exports.create = async (req, res) => {
     return ReS(res, {message:'Module created!', Module:create}, OK)
 
 }
+

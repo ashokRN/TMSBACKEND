@@ -45,6 +45,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  createAuth:{
+    type:Boolean,
+    default:false,
+  }
 });
 
 UserSchema.pre("save", async function (next) {

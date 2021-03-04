@@ -41,6 +41,7 @@ const ProjectSchema = new mongoose.Schema({
   ],
   GitUrl: {
     type: String,
+    default:'GitUrl Not Provided!'
   },
   Organaizer: {
     type: Ids,

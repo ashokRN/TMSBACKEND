@@ -9,6 +9,7 @@ const UserController = require('../controllers/User.ctrl');
 const DepartmentController = require('../controllers/Department.ctrl');
 const ModuleController = require('../controllers/Module.ctrl');
 const ToolController = require('../controllers/Tool.ctrl');
+const ProjectController = require('../controllers/Project.ctrl');
 const TaskController = require('../controllers/Task.ctrl');
 
 
@@ -23,6 +24,7 @@ router.get('/user/get',needsAuth, UserController.Get_User);
 
 // DEPARTMENT ROUTE'S
 router.post('/dept/create',needsAuth, DepartmentController.create );
+router.get('/dept/getAll',needsAuth, DepartmentController.getAll);
 
 // MODULE ROUTE'S
 router.post('/module/create',needsAuth, ModuleController.create );
@@ -31,8 +33,13 @@ router.post('/module/create',needsAuth, ModuleController.create );
 //TOOL ROUTE'S
 router.post('/tool/create',needsAuth, ToolController.create );
 
+//PROJECT ROUTE'S
+router.post('/project/create', needsAuth, ProjectController.create);
+
 
 //TASK ROUTE'S
 router.post('/task/create',needsAuth, TaskController.create );
+
+
 
 module.exports = router;
