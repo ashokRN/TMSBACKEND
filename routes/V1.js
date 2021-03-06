@@ -28,6 +28,7 @@ router.get('/dept/getAll',needsAuth, DepartmentController.getAll);
 
 // MODULE ROUTE'S
 router.post('/module/create',needsAuth, ModuleController.create );
+router.get('/module/getAll',needsAuth, ModuleController.getAll );
 
 
 //TOOL ROUTE'S

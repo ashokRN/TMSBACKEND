@@ -25,3 +25,38 @@ exports.create = async (req, res) => {
 
 }
 
+exports.getAll = async (req, res)  => {
+
+    let [user,ReQ]  = [req.user, req.query];
+
+    let err, exisitingModule;
+
+
+    const _queryWithModules = async () => {
+
+        [err, exisitingModule] = await to(Module.find({department: ReQ.department}).populate('department'));
+
+        if(err) { return ReE(res, err, INTERNAL_SERVER_ERROR) }
+
+        if(exisitingModule?.length < 0) { return ReE(res,{message:`Doesn\'t  found any module for ${ReQ.department} `}, BAD_REQUEST)}
+
+        return ReS(res, {message:`Modules Found!`, Module:exisitingModule}, OK);
+    }
+
+    const _queryWithoutModules = async () => {
+
+        [err, exisitingModule] = await to(Module.find({}).populate('department'));
+
+        if(err) { return ReE(res, err, INTERNAL_SERVER_ERROR) }
+
+        if(exisitingModule?.length < 0) { return ReE(res,{message:`Doesn\'t  found any modules `}, BAD_REQUEST)}
+
+        return ReS(res, {message:`Modules Found!`, Module:exisitingModule}, OK);
+    }
+
+
+    if(ReQ.department !== "") _queryWithModules();
+    else _queryWithoutModules();
+}
+
+
