@@ -5,6 +5,14 @@ const ToolSchema = new mongoose.Schema({
   name: {
     type: String,
   },
+  module:{
+    type:Ids,
+    ref:'Module'
+  },
+  department:{
+    type:Ids,
+    ref:'Department'
+  },
   developmentUse: {
     type: String,
   },

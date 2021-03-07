@@ -33,6 +33,7 @@ router.get('/module/getAll',needsAuth, ModuleController.getAll );
 
 //TOOL ROUTE'S
 router.post('/tool/create',needsAuth, ToolController.create );
+router.get('/tool/getAll',needsAuth, ToolController.getAll ); 
 
 //PROJECT ROUTE'S
 router.post('/project/create', needsAuth, ProjectController.create);
