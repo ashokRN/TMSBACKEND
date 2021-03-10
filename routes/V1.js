@@ -37,6 +37,8 @@ router.get('/tool/getAll',needsAuth, ToolController.getAll );
 
 //PROJECT ROUTE'S
 router.post('/project/create', needsAuth, ProjectController.create);
+router.get('/project/getAll', needsAuth, ProjectController.getAll);
+router.get('/project/getOne/:id', needsAuth, ProjectController.getOne);
 
 
 //TASK ROUTE'S

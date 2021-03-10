@@ -9,6 +9,10 @@ const ProjectSchema = new mongoose.Schema({
   description: {
     type: String,
   },
+  department:{
+    type :Ids,
+    ref:'Department'
+  },
   DevelopmentTools: [
     {
       type: Ids,
