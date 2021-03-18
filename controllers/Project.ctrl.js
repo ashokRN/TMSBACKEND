@@ -1,4 +1,4 @@
-const { Project } = require("../models");
+const { Project, Module } = require("../models");
 const { to, ReE, ReS, isNull } = require("../utils/Util");
 const {INTERNAL_SERVER_ERROR, BAD_REQUEST, OK} = require('http-status');
 
@@ -71,12 +71,98 @@ exports.getOne = async (req, res) => {
     
     let err, exisitingProject;
 
-    [err, exisitingProject] = await to(Project.findById(projId));
+    [err, exisitingProject] = await to(Project.findById(projId).populate([{
+        path:'Modules',
+        populate:[
+            {
+                path:'module',
+                select:['name'],
+                model:'Module'
+            },{
+                path:'TL',
+                select:['userName'],
+                model:'User'
+            }
+        ]
+    },{
+        path:'department',
+        model:'Department'
+    }]));
 
     if(err) { return ReE(res, err, INTERNAL_SERVER_ERROR) }
 
     if(!exisitingProject) { return ReE(res, {message:'Project doesn\'t found!'}, BAD_REQUEST) }
 
     return ReS(res, {message:'Project Found!', Project:exisitingProject}, OK);
+
+}
+
+exports.addModule = async (req, res) => {
+
+    let [user, ReQ] = [req.user, req.body];
+
+    let err, exisitingProject, exisitingModule, saveProject;
+
+    [err, exisitingProject] = await to(Project.findById(ReQ.id)); 
+
+    if(err) { return ReE(res, err, INTERNAL_SERVER_ERROR) }
+
+    if(!exisitingProject) { return ReE(res, {message:'Project doesn\'t found!'}, BAD_REQUEST) }
+    
+    [err, exisitingModule] = await to(Module.findById(ReQ.module));
+
+    if(err) { return ReE(res, err, INTERNAL_SERVER_ERROR) }
+
+    if(!exisitingModule) { return ReE(res, {message:'Module doesn\'t found!'}, BAD_REQUEST) };
+
+    let exisitSavedModule = exisitingProject.Modules.find(s => s.module.equals(exisitingModule._id));
+
+    if(exisitSavedModule) { return ReE(res, {message:'Module already here!'}, BAD_REQUEST) }
+
+    let addModule = {module: exisitingModule._id, TL:user._id};
+
+    exisitingProject.Modules.push(addModule);
+
+    [err, saveProject] = await to(exisitingProject.save());
+
+    if(err){ return ReE(res, err, INTERNAL_SERVER_ERROR) }
+
+    if(!saveProject){ return ReE(res, {message:'Module doesn\'t added this project'}, BAD_REQUEST) }
+
+    return ReS(res, {message:'Module Added successfully', Project:saveProject}, OK)
+
+}
+
+exports.addDeveloper = async (req, res) => {
+
+    let [user, ReQ] = [req.user, req.body];
+
+    let err, exisitingProject, exisitingModule, saveProject;
+
+    [err, exisitingProject] = await to(Project.findById(ReQ.id));
+
+    if(err) { return ReE(res, err, INTERNAL_SERVER_ERROR) }
+
+    if(!exisitingProject) { return ReE(res, {message:'Project doesn\'t found!'}, BAD_REQUEST) }
+    
+    [err, exisitingModule] = await to(Module.findById(ReQ.module));
+
+    if(err) { return ReE(res, err, INTERNAL_SERVER_ERROR) }
+
+    if(!exisitingModule) { return ReE(res, {message:'Module doesn\'t found!'}, BAD_REQUEST) };
+
+    let exisitSavedModule = exisitingProject.Modules.find(s => s.module.equals(exisitingModule._id));
+
+    if(!exisitSavedModule) { return ReE(res, {message:'Module not here!'}, BAD_REQUEST) }
+
+    exisitSavedModule.developers.push(ReQ.dev);
+
+    [err, saveProject] = await to(exisitingProject.save());
+
+    if(err){ return ReE(res, err, INTERNAL_SERVER_ERROR) }
+
+    if(!saveProject){ return ReE(res, {message:'Module doesn\'t added this project'}, BAD_REQUEST) }
+
+    return ReS(res, {message:'Module Added successfully', Project:saveProject}, OK)
 
 }

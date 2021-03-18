@@ -75,4 +75,42 @@ exports.Login = async (req, res) => {
         }, OK ) }
 };
 
-exports.Get_User = (req, res) => (ReS(res, {message:'User data fetched', user:req.user}, OK))
+exports.Get_User = (req, res) => (ReS(res, {message:'User data fetched', user:req.user}, OK));
+
+exports.GetAll = async (req, res) => {
+
+  let [user] = [req.user];
+
+  let err, exisitingUsers;
+
+  [err, exisitingUsers] = await to(User.find({}));
+
+  if(err) { return ReE(res, err, INTERNAL_SERVER_ERROR) }
+
+  if(exisitingUsers.length < 0){ return ReE(res, {message:'Users not found!'}, BAD_REQUEST) }
+
+  return ReS(res, {message:'Users found', Users:exisitingUsers}, OK);
+
+}
+
+
+exports.addUser = async (req, res) => {
+  
+  let ReQ = req.body;
+  let err, createUser;
+
+  let newUser = new User({
+    userName: ReQ.userName,
+    password:ReQ.userName + '@123',
+    Department: ReQ.department
+  });
+
+  [err, createUser] = await to(newUser.save()); 
+
+  if(err){ return ReE(res, err, INTERNAL_SERVER_ERROR) }
+
+  if(!createUser){ return ReE(res, {message:'UserName doesn\'t create. Try again!'}, BAD_REQUEST) }
+
+  return ReS(res, {message:'User create Success', newUser:createUser}, OK);
+
+}

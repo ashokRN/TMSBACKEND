@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema({
   },
   phone: {
     type: Number,
-    required: true,
+    // required: true,
   },
   email: {
     type: String,
@@ -21,7 +21,8 @@ const UserSchema = new mongoose.Schema({
     type: String,
   },
   Department: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref:'Department'
   },
   company: {
     type: String,

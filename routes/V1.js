@@ -21,6 +21,8 @@ router.get('/', (req,res ) => {
 router.post('/user/create', UserController.Reg_user);
 router.post('/user/login', UserController.Login);
 router.get('/user/get',needsAuth, UserController.Get_User);
+router.get('/user/getAll',needsAuth, UserController.GetAll);
+router.post('/user/addUser',needsAuth, UserController.addUser);
 
 // DEPARTMENT ROUTE'S
 router.post('/dept/create',needsAuth, DepartmentController.create );
@@ -39,6 +41,8 @@ router.get('/tool/getAll',needsAuth, ToolController.getAll );
 router.post('/project/create', needsAuth, ProjectController.create);
 router.get('/project/getAll', needsAuth, ProjectController.getAll);
 router.get('/project/getOne/:id', needsAuth, ProjectController.getOne);
+router.post('/project/addModule', needsAuth, ProjectController.addModule);
+router.post('/project/addDeveloper', needsAuth, ProjectController.addDeveloper);
 
 
 //TASK ROUTE'S
