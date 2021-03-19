@@ -100,9 +100,11 @@ exports.addUser = async (req, res) => {
   let err, createUser;
 
   let newUser = new User({
-    userName: ReQ.userName,
-    password:ReQ.userName + '@123',
-    Department: ReQ.department
+    userName: ReQ.name,
+    password:ReQ.name + '@123',
+    email:ReQ.email,
+    Department: ReQ.department,
+    gender:ReQ.gender
   });
 
   [err, createUser] = await to(newUser.save()); 
