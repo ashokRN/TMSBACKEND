@@ -95,7 +95,7 @@ exports.GetAll = async (req, res) => {
 
 
 exports.addUser = async (req, res) => {
-  
+    
   let ReQ = req.body;
   let err, createUser;
 

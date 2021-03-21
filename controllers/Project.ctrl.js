@@ -1,4 +1,4 @@
-const { Project, Module } = require("../models");
+const { Project, Module, User } = require("../models");
 const { to, ReE, ReS, isNull } = require("../utils/Util");
 const {INTERNAL_SERVER_ERROR, BAD_REQUEST, OK} = require('http-status');
 
@@ -82,6 +82,10 @@ exports.getOne = async (req, res) => {
                 path:'TL',
                 select:['userName'],
                 model:'User'
+            },{
+                path:'developers',
+                select:['userName', 'gender', 'email'],
+                model:'User'
             }
         ]
     },{
@@ -129,7 +133,7 @@ exports.addModule = async (req, res) => {
 
     if(!saveProject){ return ReE(res, {message:'Module doesn\'t added this project'}, BAD_REQUEST) }
 
-    return ReS(res, {message:'Module Added successfully', Project:saveProject}, OK)
+    return ReS(res, {message:'Module Added successfully', Project:{module:exisitingModule, TL:req.user}}, OK)
 
 }
 
@@ -137,7 +141,13 @@ exports.addDeveloper = async (req, res) => {
 
     let [user, ReQ] = [req.user, req.body];
 
-    let err, exisitingProject, exisitingModule, saveProject;
+    let err,dev, exisitingProject, exisitingModule, saveProject;
+
+    [err, dev] = await to(User.findById(ReQ.dev));
+
+    if(err) { return ReE(res, err, INTERNAL_SERVER_ERROR) }
+
+    if(!dev) { return ReE(res, {message:'Developer doesn\'t found!'}, BAD_REQUEST) }
 
     [err, exisitingProject] = await to(Project.findById(ReQ.id));
 
@@ -155,7 +165,7 @@ exports.addDeveloper = async (req, res) => {
 
     if(!exisitSavedModule) { return ReE(res, {message:'Module not here!'}, BAD_REQUEST) }
 
-    exisitSavedModule.developers.push(ReQ.dev);
+    exisitSavedModule.developers.push(dev._id);
 
     [err, saveProject] = await to(exisitingProject.save());
 
