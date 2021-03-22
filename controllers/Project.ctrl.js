@@ -173,6 +173,44 @@ exports.addDeveloper = async (req, res) => {
 
     if(!saveProject){ return ReE(res, {message:'Module doesn\'t added this project'}, BAD_REQUEST) }
 
-    return ReS(res, {message:'Module Added successfully', Project:saveProject}, OK)
+    return ReS(res, {message:'Module Added successfully', Dev:{_id:dev._id, userName:dev.userName, email:dev.email, gender:dev.gender}}, OK)
+
+}
+
+exports.getModule = async (req, res) => {
+
+    let [user, ReQ] = [req.user, req.query];
+
+    let err, exisitingProject;
+
+    [err, exisitingProject] = await to(Project.findById(ReQ.projectId).populate([{
+        path:'Modules',
+        populate:[
+            {
+                path:'module',
+                select:['name'],
+                model:'Module'
+            },{
+                path:'TL',
+                select:['userName', 'email'],
+                model:'User'
+            },{
+                path:'developers',
+                select:['userName', 'gender', 'email'],
+                model:'User'
+            }
+        ]
+    },{
+        path:'department',
+        model:'Department'
+    }]));
+
+    if(err){ return ReE(res, err, INTERNAL_SERVER_ERROR) }
+
+    if(!exisitingProject) { return ReE(res, {message:'Project doesn\'t found!'}, BAD_REQUEST) };
+
+    let moduleDet = exisitingProject.Modules.find(s => s.equals(ReQ.moduleId));
+
+    return ReS(res, {message:'ProjectModule found!', Module:moduleDet, projectName:exisitingProject.Name});
 
 }

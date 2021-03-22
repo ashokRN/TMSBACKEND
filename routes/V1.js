@@ -43,6 +43,7 @@ router.get('/project/getAll', needsAuth, ProjectController.getAll);
 router.get('/project/getOne/:id', needsAuth, ProjectController.getOne);
 router.post('/project/addModule', needsAuth, ProjectController.addModule);
 router.post('/project/addDeveloper', needsAuth, ProjectController.addDeveloper);
+router.get('/project/module', needsAuth, ProjectController.getModule);
 
 
 //TASK ROUTE'S
