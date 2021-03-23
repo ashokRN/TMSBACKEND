@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const pe = require('parse-error')
 const CONFIG = require('./config/config')
+mongoose.set('useCreateIndex', true)
 const models = require('./models')
 const app = express()
 
