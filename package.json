@@ -1,0 +1,32 @@
+{
+  "name": "tms_backend",
+  "version": "1.0.0",
+  "description": "This is Task management API Project",
+  "main": "index.js",
+  "engines": {
+    "node": "14.16.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ashok kumar A (Fullstack MERN and ReactNative Developer)",
+  "license": "ISC",
+  "dependencies": {
+    "await-to-js": "^2.1.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "http-status": "^1.5.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.18",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.7",
+    "parse-error": "^0.2.0",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0"
+  }
+  
+}
