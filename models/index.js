@@ -3,7 +3,7 @@ const path = require("path");
 const basename = path.basename(__filename);
 const models = {};
 const mongoose = require("mongoose");
-const CONFIG = require("../config/config.js");
+const CONFIG = require("../config/config");
 
 
 if (CONFIG.DB_URI != "") {

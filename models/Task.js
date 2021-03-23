@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Ids = mongoose.Schema.Types.ObjectId;
-const  CONFIG = require("../config/Config");
+const  CONFIG = require("../config/config");
 
 const TaskSchema = new mongoose.Schema({
   name: {
