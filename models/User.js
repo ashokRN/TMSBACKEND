@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const { to, ReE, ReS, isNull, isEmpty, TE } = require("../utils/Util");
 const CONFIG = require("../config/config.js");
-const { JWT_ENCRYPTION, JWT_EXPIRATION } = CONFIG;
 const bcrypt = require("bcryptjs");
 
 const UserSchema = new mongoose.Schema({
@@ -87,10 +86,10 @@ UserSchema.methods.comparePassword = async function (pw) {
 };
 
 UserSchema.methods.getJWT = function () {
-  let expiration_time = parseInt(JWT_EXPIRATION);
+  let expiration_time = parseInt(CONFIG.JWT_EXPIRATION);
   return (
     "Bearer " +
-    jwt.sign({ user_id: this._id }, JWT_ENCRYPTION, {
+    jwt.sign({ user_id: this._id }, CONFIG.JWT_ENCRYPTION, {
       expiresIn: expiration_time,
     })
   );

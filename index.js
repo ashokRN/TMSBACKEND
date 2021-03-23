@@ -9,7 +9,6 @@ mongoose.set('useCreateIndex', true)
 const models = require('./models')
 const app = express()
 
-const {PORT} = CONFIG;
 
 app.use(logger('combined'))
 
@@ -31,6 +30,6 @@ process.on('unhandledRejection', error => {
     // throw error;
 })
 
-app.listen(PORT, () => {
-    console.log('Server started on port', PORT)
+app.listen(CONFIG.PORT, () => {
+    console.log('Server started on port', CONFIG.PORT);
 })
