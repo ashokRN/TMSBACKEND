@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Ids = mongoose.Schema.Types.ObjectId;
-const { TASK_STATUS } = require("../config/Config");
+const  CONFIG = require("../config/config");
 
 const TaskSchema = new mongoose.Schema({
   name: {
@@ -24,7 +24,7 @@ const TaskSchema = new mongoose.Schema({
   status: {
     type: String,
     default: "NOT ASSIGN",
-    enum: TASK_STATUS,
+    enum: CONFIG.TASK_STATUS,
   },
   pickDate: {
     type: String,

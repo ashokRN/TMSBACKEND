@@ -3,11 +3,10 @@ const path = require("path");
 const basename = path.basename(__filename);
 const models = {};
 const mongoose = require("mongoose");
-const CONFIG = require("../config/config.js");
+const CONFIG = require("../config/config");
 
-const { DB_URI, APP } = CONFIG;
 
-if (DB_URI != "") {
+if (CONFIG.DB_URI != "") {
   var files = fs
     .readdirSync(__dirname)
     .filter((file) => {
@@ -22,7 +21,7 @@ if (DB_URI != "") {
     });
 
   mongoose.Promise = global.Promise; //set mongo up to use promises
-  const mongo_location = DB_URI;
+  const mongo_location = CONFIG.DB_URI;
 
   mongoose
     .connect(mongo_location, {
@@ -32,7 +31,7 @@ if (DB_URI != "") {
       retryWrites: false,
     })
     .catch((err) => {
-      console.log(`*** Can Not Connect to Mongo Server in Your APP ${APP} `);
+      console.log(`*** Can Not Connect to Mongo Server in Your APP ${CONFIG.APP} `);
       console.log(err);
     });
 
@@ -40,7 +39,7 @@ if (DB_URI != "") {
   module.exports = db;
   db.once("open", () => {
     console.log(
-      `Connected to mongo at MONGODB_URI : ${DB_URI} in Your APP ${APP}`
+      `Connected to mongo at MONGODB_URI : ${CONFIG.DB_URI} in Your APP ${CONFIG.APP}`
     );
   });
   db.on("error", (error) => {

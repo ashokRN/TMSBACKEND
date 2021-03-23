@@ -4,12 +4,11 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const pe = require('parse-error')
-const CONFIG = require('./config/config.js');
+const CONFIG = require('./config/config');
 mongoose.set('useCreateIndex', true)
 const models = require('./models')
 const app = express()
 
-const {PORT} = CONFIG;
 
 app.use(logger('combined'))
 
@@ -31,6 +30,6 @@ process.on('unhandledRejection', error => {
     // throw error;
 })
 
-app.listen(PORT, () => {
-    console.log('Server started on port', PORT)
+app.listen(CONFIG.PORT, () => {
+    console.log('Server started on port', CONFIG.PORT);
 })
