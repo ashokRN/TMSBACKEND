@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const { to, ReE, ReS, isNull, isEmpty, TE } = require("../utils/Util");
-const CONFIG = require("../config/Config.js");
+const CONFIG = require("../config/config.js");
 const { JWT_ENCRYPTION, JWT_EXPIRATION } = CONFIG;
 const bcrypt = require("bcryptjs");
 
