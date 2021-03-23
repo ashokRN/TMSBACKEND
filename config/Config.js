@@ -1,4 +1,4 @@
-require("dotenv").config(); //instatiate environment variables
+// require("dotenv").config(); //instatiate environment variables
 
 let CONFIG = {};
 
