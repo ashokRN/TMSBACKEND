@@ -6,7 +6,7 @@ CONFIG.APP = process.env.APP || "Development";
 
 CONFIG.PORT = process.env.PORT || "5000";
 
-CONFIG.DB_URI = process.env.DB_URI || "mongodb://localhost:27017/TMS_APP"
+CONFIG.DB_URI = process.env.DB_URI || "mongodb+srv://ashoka:ashoka@22@cluster0.tnzbw.mongodb.net/TMS_APP?retryWrites=true&w=majority"
 
 CONFIG.JWT_ENCRYPTION = process.env.JWT_ENCRYPTION || "jwt_please_change";
 
