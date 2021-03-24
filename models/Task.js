@@ -23,7 +23,7 @@ const TaskSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    default: "NOT ASSIGN",
+    default: "PENDING",
     enum: CONFIG.TASK_STATUS,
   },
   pickDate: {
