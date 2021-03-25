@@ -13,9 +13,9 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     // required: true,
   },
-  gender:{
-    type:String,
-    enum:['MALE', 'FEMALE']
+  gender: {
+    type: String,
+    enum: ["MALE", "FEMALE"],
   },
   email: {
     type: String,
@@ -25,7 +25,7 @@ const UserSchema = new mongoose.Schema({
   },
   Department: {
     type: mongoose.Schema.Types.ObjectId,
-    ref:'Department'
+    ref: "Department",
   },
   company: {
     type: String,
@@ -42,6 +42,12 @@ const UserSchema = new mongoose.Schema({
       ref: "",
     },
   ],
+  tasks: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Tasks",
+    },
+  ],
   profilePic: {
     type: String,
   },
@@ -49,10 +55,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  createAuth:{
-    type:Boolean,
-    default:false,
-  }
+  createAuth: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 UserSchema.pre("save", async function (next) {

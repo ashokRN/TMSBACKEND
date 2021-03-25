@@ -49,6 +49,7 @@ router.get('/project/module', needsAuth, ProjectController.getModule);
 //TASK ROUTE'S
 router.post('/task/create',needsAuth, TaskController.create );
 router.get('/task/getAll', needsAuth, TaskController.getAll);
+router.get('/task/getAllByProj', needsAuth, TaskController.getAllByProj);
 
 
 

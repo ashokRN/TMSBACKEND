@@ -209,7 +209,7 @@ exports.getModule = async (req, res) => {
 
     if(!exisitingProject) { return ReE(res, {message:'Project doesn\'t found!'}, BAD_REQUEST) };
 
-    let moduleDet = exisitingProject.Modules.find(s => s.equals(ReQ.moduleId));
+    let moduleDet = exisitingProject.Modules.find(s => s.module.equals(ReQ.module));
 
     return ReS(res, {message:'ProjectModule found!', Module:moduleDet, projectName:exisitingProject.Name});
 
