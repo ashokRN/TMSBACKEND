@@ -35,7 +35,8 @@ router.get('/module/getAll',needsAuth, ModuleController.getAll );
 
 //TOOL ROUTE'S
 router.post('/tool/create',needsAuth, ToolController.create );
-router.get('/tool/getAll',needsAuth, ToolController.getAll ); 
+router.get('/tool/getAll',needsAuth, ToolController.getAll );
+router.get('/tool/getAllTools',needsAuth, ToolController.getAllTools);  
 
 //PROJECT ROUTE'S
 router.post('/project/create', needsAuth, ProjectController.create);
@@ -50,6 +51,7 @@ router.get('/project/module', needsAuth, ProjectController.getModule);
 router.post('/task/create',needsAuth, TaskController.create );
 router.get('/task/getAll', needsAuth, TaskController.getAll);
 router.get('/task/getAllByProj', needsAuth, TaskController.getAllByProj);
+router.get('/task/getAllByUser', needsAuth, TaskController.getAllByUser);
 
 
 

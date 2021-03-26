@@ -9,6 +9,9 @@ const ToolSchema = new mongoose.Schema({
     type:Ids,
     ref:'Module'
   },
+  image:{
+    type:String
+  },
   department:{
     type:Ids,
     ref:'Department'

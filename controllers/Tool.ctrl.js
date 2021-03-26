@@ -23,6 +23,7 @@ exports.create = async (req, res) => {
         module:ReQ.module,
         department:ReQ.department,
         developmentUse: ReQ.use,
+        image:ReQ.image,
         VersionIndicators:{
             Version: ReQ.version
         },
@@ -80,4 +81,16 @@ exports.getAll = async (req, res)  => {
     if(ReQ.department !== "" && ReQ.module === "") _queryWithDepartMent();
     else if(ReQ.department !== "" && ReQ.module !== "") _queryWithDepartMentAndModule();
     else _queryWithoutTools();
+}
+
+exports.getAllTools = async (req, res) => {
+        let err, exisitingTools;
+
+        [err, exisitingTools] = await to(Tool.find({}));
+
+        if(err) { return ReE(res, err, INTERNAL_SERVER_ERROR) }
+
+        if(exisitingTools?.length === 0) { return ReE(res,{message:`Doesn\'t  found any tools for this department`}, BAD_REQUEST)}
+
+        return ReS(res, {message:`Tools Found!`, Tools:exisitingTools}, OK);
 }

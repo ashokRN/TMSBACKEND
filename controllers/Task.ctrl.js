@@ -194,3 +194,40 @@ exports.getAllByProj = async (req, res) => {
   }
 
 }
+
+exports.getAllByUser = async (req, res) => {
+
+  console.log('hello');
+
+  let [user, ReQ] = [req.user, req.query];
+
+  
+  let err, exisitingTasks;
+
+  [err, exisitingTasks] = await to(Task.find({assignedTo:ReQ.id}).populate([{
+    path:'assignedTo',
+    select:["userName", "email"],
+    model:"User"
+  },{
+    path:'assignedFrom',
+    select:["userName", "email"],
+    model:"User"
+  },{
+    path:'module',
+    select:["name"],
+    model:"Module"
+  },{
+    path:'Project',
+    select:["Name", "description"],
+    model:"Project"
+  }]));
+
+  console.log(exisitingTasks, 'exisu');
+
+  if(err){ return ReE(res, err, INTERNAL_SERVER_ERROR) }
+
+  if(exisitingTasks.length === 0){ return ReE(res, {message:'Task doesn\'t found, Try again!'}, BAD_REQUEST) }
+
+  return ReS(res, {message:'Task founded!', Tasks:exisitingTasks}, OK);
+
+}

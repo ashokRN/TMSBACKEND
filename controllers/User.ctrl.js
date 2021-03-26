@@ -69,13 +69,34 @@ exports.Login = async (req, res) => {
             email: exisitingUser.email,
             phone: exisitingUser.phone,
             userName: exisitingUser.userName,
+            gender:exisitingUser.gender,
+            Department:exisitingUser.Department
          }, 
          token: exisitingUser.getJWT(), 
         
         }, OK ) }
 };
 
-exports.Get_User = (req, res) => (ReS(res, {message:'User data fetched', user:req.user}, OK));
+exports.Get_User = async (req, res) => {
+  let [user] = [req.user];
+
+  let err, exisitingUser;
+
+  [err, exisitingUser] = await to(User.findById(user._id).populate({path:'Department'}));
+
+  if(err) { return ReE(res, err, INTERNAL_SERVER_ERROR) }
+
+  if(!exisitingUser){ return ReE(res, {message:'Users not found!'}, BAD_REQUEST) }
+
+  return ReS(res, {message:'Users found', User:{
+    _id: exisitingUser._id,
+    email: exisitingUser.email,
+    phone: exisitingUser.phone,
+    userName: exisitingUser.userName,
+    gender:exisitingUser.gender,
+    Department:exisitingUser.Department.name
+ }}, OK);
+} 
 
 exports.GetAll = async (req, res) => {
 
